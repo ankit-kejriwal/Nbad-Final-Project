@@ -27,6 +27,13 @@ app.use(bodyParser.json());
 
 // setting path for the client side
 app.use(express.static(path.join(__dirname, 'public')));
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 // added user route
 app.use('/users',users); 
 
