@@ -13,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [AuthService],
+  providers: [AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

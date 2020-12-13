@@ -27,8 +27,6 @@ router.post("/register", (req, res, next) => {
 router.post("/authenticate", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(username);
-  console.log(password);
   User.getUserByUsername(username, (err, user) => {
     if (err) throw err;
     if (!user) return res.send({ success: false, msg: "User not found" });
@@ -58,7 +56,7 @@ router.post("/authenticate", (req, res, next) => {
 
 // Profile
 router.get("/profile", passport.authenticate('jwt',{session:false}),(req, res, next) => {
-    res.send({user: req.user});
+     res.json({user: req.user});
 });
 
 module.exports = router;
