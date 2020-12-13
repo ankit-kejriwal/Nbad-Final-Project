@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
   email: String;
   password: String;
   constructor(private authService: AuthService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -36,6 +38,18 @@ export class RegisterComponent implements OnInit {
       this.toastr.error('Please fill valid email', 'Error',{timeOut: 3000});
       return false;
     }
+    this.authService
+      .registerUser(user)
+      .pipe(takeUntil(this.componentDestroyed$))
+      .subscribe((data: any) => {
+        if (data.success) {
+          this.toastr.success('User is created', 'Success',{timeOut: 3000});
+          this.router.navigate(['/login']);
+        } else {
+          this.toastr.error('Unable to create a user', 'Error',{timeOut: 3000});
+          this.router.navigate(['/register']);
+        }
+      });
   }
 
 }

@@ -5,7 +5,8 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-
+  authToken : any;
+  user: any;
   constructor(
     private http: HttpClient
   ) { }
@@ -17,6 +18,7 @@ export class AuthService {
   }
 
   validateUser(user){
+
     if(user.name == undefined || user.email == undefined || user.username == undefined || user.password == undefined){
       return false;
     }
