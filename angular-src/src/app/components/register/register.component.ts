@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
   username: String;
   email: String;
   password: String;
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -27,11 +29,11 @@ export class RegisterComponent implements OnInit {
       password: this.password
     };
     if(!this.authService.validateUser(user)){
-      console.log('Please fill in all details');
+      this.toastr.error('Please fill in all details', 'Error',{timeOut: 3000});
       return false;
     }
     if(!this.authService.validateEmail(user.email)){
-      console.log('Please fill valid email');
+      this.toastr.error('Please fill valid email', 'Error',{timeOut: 3000});
       return false;
     }
   }
