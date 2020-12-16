@@ -14,6 +14,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AuthService } from './services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthGuard } from './guards/auth.guard';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AuthGuard } from './guards/auth.guard';
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    PieChartComponent,
+    BarChartComponent
   ],
   imports: [
     BrowserModule,
