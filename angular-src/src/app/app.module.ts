@@ -17,6 +17,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ConfigureComponent } from './components/configure/configure.component';
+import { ExpensesComponent } from './components/expenses/expenses.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ConfigureComponent } from './components/configure/configure.component';
     ProfileComponent,
     PieChartComponent,
     BarChartComponent,
-    ConfigureComponent
+    ConfigureComponent,
+    ExpensesComponent
   ],
   imports: [
     BrowserModule,

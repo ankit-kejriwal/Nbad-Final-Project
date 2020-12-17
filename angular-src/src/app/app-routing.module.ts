@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ExpensesComponent } from './components/expenses/expenses.component';
 
 
 const routes: Routes = [
@@ -36,6 +37,11 @@ const routes: Routes = [
   {
     path: 'configure',
     component: ConfigureComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'expense',
+    component: ExpensesComponent,
     canActivate:[AuthGuard]
   }
 ];

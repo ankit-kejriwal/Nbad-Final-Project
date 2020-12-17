@@ -49,7 +49,6 @@ export class ConfigureComponent implements OnInit {
               this.categories.push(data[i]);
             }
           }
-          console.log(this.categories);
       },
       (err) =>{
         this.toastr.error('Unable to fetch category', 'Error',{timeOut: 3000});

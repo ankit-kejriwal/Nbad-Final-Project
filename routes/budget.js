@@ -22,7 +22,7 @@ router.post("/",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     }
 });
 router.get("/all",passport.authenticate('jwt',{session:false}),async(req,res)=>{
-    const budgets=await budget.find({userId: req.user._id});
+    const budgets=await budget.find({userId: req.user._id},{title:1,cost:1});
     res.json(budgets);
 });
 
