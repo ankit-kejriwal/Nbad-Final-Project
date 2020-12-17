@@ -1,3 +1,4 @@
+import { ConfigureComponent } from './components/configure/configure.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'configure',
+    component: ConfigureComponent,
     canActivate:[AuthGuard]
   }
 ];

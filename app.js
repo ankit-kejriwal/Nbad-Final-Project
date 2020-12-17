@@ -37,6 +37,12 @@ require('./config/passport')(passport);
 // added user route
 app.use('/users',users); 
 
+// added budget route
+app.use("/budget",require("./routes/budget"));
+
+// added expense route
+app.use("/expense",require("./routes/expense"));
+
 app.get('/', (req,res) => {
     res.send('Invalid endpoint');
 })
