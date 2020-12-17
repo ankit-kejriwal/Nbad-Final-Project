@@ -13,7 +13,7 @@ router.post("/",passport.authenticate('jwt',{session:false}),async(req,res)=>{
             return res.status(400).json({msg: "Cost field have not been entered"});
         const newBudget=new budget({
             title,cost,
-            userId: req.user,
+            userId: req.user._id,
         });
         const saveBudget=await newBudget.save();
         res.json(saveBudget);
@@ -22,7 +22,7 @@ router.post("/",passport.authenticate('jwt',{session:false}),async(req,res)=>{
     }
 });
 router.get("/all",passport.authenticate('jwt',{session:false}),async(req,res)=>{
-    const budgets=await budget.find({userId: req.user});
+    const budgets=await budget.find({userId: req.user._id});
     res.json(budgets);
 });
 

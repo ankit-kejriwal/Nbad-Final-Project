@@ -99,7 +99,7 @@ export class BarChartComponent implements OnInit {
 
         d3.selectAll('.axis-text').classed('selected', false);
 
-        d3.select(this.nextSibling).classed('label-text selected', true);
+        // d3.select(this.nextSibling).classed('label-text selected', true);
 
         d3.select(this).classed('bar selected', true);
 

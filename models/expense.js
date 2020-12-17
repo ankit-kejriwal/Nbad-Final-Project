@@ -7,5 +7,5 @@ const expenseSchema = new mongoose.Schema({
     cost:{type:Number,required:true},
     userId:{type:String,required:true}
 });
-
+expenseSchema.index( {title:1, userId:1,year:1, month:1, cost:1}, { unique: true } )
 module.exports = Expense = mongoose.model("expense",expenseSchema);

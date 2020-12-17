@@ -34,6 +34,9 @@ export class LoginComponent implements OnInit {
           this.toastr.error('Login Failed!! Please check your username and password', 'Error',{timeOut: 3000});
           this.router.navigate(['login']);
         }
+      },
+      (err) =>{
+        this.toastr.error('Login Failed!! Please check your username and password', 'Error',{timeOut: 3000});
       });
   }
 
