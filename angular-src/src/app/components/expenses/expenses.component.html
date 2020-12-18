@@ -33,3 +33,38 @@
     <button type="button" class="btn btn-primary"(click)="addExpenses()">Submit</button>
   </div>
 </div>
+<br>
+<br>
+<h2>Current Month Expenses</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Category Name</th>
+        <th scope="col">Cost</th>
+        <th scope="col">Month</th>
+        <th scope="col">Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor = "let row of expenses; let i = index;">
+        <th scope="row">
+          {{i+1}}
+        </th>
+        <td>
+          {{row['title']| uppercase}}
+        </td>
+        <td>
+          {{row['cost']}}
+        </td>
+        <td>
+          {{row['month']}}
+        </td>
+        <td>
+          {{row['year']}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

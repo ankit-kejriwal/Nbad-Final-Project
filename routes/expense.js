@@ -19,11 +19,15 @@ router.post("/",passport.authenticate('jwt',{session:false}),async(req,res)=>{
             return res.status(400).json({msg: "Month is missing"});
         if(!year)
             return res.status(400).json({msg: "Year is missing"});
-        const newExpense=new expense({
-            title,month,year,cost,
-            userId: req.user,
+        // const newExpense=new expense({
+        //     title,month,year,cost,
+        //     userId: req.user._id,
+        // });
+        // const saveExpense=await newExpense.save();
+        const saveExpense = await expense.findOneAndUpdate({userId: req.user._id, title:title,month:month,year:year},{cost:cost},{
+            new: true,
+            upsert: true
         });
-        const saveExpense=await newExpense.save();
         res.json(saveExpense);
     }catch(err){
         res.status(500).json({error:err.message});
@@ -31,8 +35,15 @@ router.post("/",passport.authenticate('jwt',{session:false}),async(req,res)=>{
 });
 
 // get Expense of the particular user
-router.get("/getExpense",passport.authenticate('jwt',{session:false}),async(req,res)=>{
-    const expenses=await expense.find({userId: req.user, month:req.query.month , year:req.query.year});
+router.get("/getExpense",passport.authenticate('jwt',{session:false}), async(req,res)=>{
+    const expenses= await expense.find({userId: req.user._id, month:req.query.month , year:req.query.year});
+    res.json(expenses);
+});
+
+// get current month expense of the particular user
+router.get("/getCurrentMonthExpense",passport.authenticate('jwt',{session:false}), async(req,res)=>{
+    let date = new Date();
+    const expenses= await expense.find({userId: req.user._id, month:date.getMonth()+1 , year:date.getFullYear()},{},{limit: 10});
     res.json(expenses);
 });
 

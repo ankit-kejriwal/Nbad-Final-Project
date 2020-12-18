@@ -5,5 +5,5 @@ const budgetSchema= new mongoose.Schema({
     cost:{type:Number,required:true},
     userId:{type:String,required:true}
 });
-budgetSchema.index( {title:1, userId:1}, { unique: true } )
+
 module.exports= Budget = mongoose.model("budget",budgetSchema);
