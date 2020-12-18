@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<div class="box">
+  <div class="item1">
+    <app-pie-chart *ngIf="displayPieChart" [item]="pieChartData"></app-pie-chart>
+  </div>
+  <div class="item1">
+    <app-bar-chart *ngIf="displayPieChart" [item]="pieChartData"></app-bar-chart>
+  </div>
+</div>

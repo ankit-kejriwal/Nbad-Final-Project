@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-
+import { Component, OnInit, Input, NgZone, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
@@ -7,71 +10,41 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PieChartComponent implements OnInit {
   @Input() item: any;
-  constructor() { }
+  private chart: am4charts.PieChart;
+  constructor(
+    @Inject(PLATFORM_ID) private platformId, private zone: NgZone
+  ) { }
 
   ngOnInit(): void {
-    this.drawPieChart();
+
+  }
+  // Run the function only in the browser
+  browserOnly(f: () => void) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.zone.runOutsideAngular(() => {
+        f();
+      });
+    }
   }
 
-  drawPieChart() {
-    var w = 300;
-    var h = 300;
-    var r = h / 2;
-    var color = d3.scale.category20c();
-    var data = [];
-    // tslint:disable-next-line: forin
-    for (let key in this.item) {
-      const obj = {
-        label : key,
-        value : this.item[key]
-      };
-      data.push(obj);
-    }
+  ngAfterViewInit(){
+    this.browserOnly(() => {
+      am4core.useTheme(am4themes_animated);
 
-    var vis = d3
-      .select('#pieChart')
-      .append('svg:svg')
-      .data([data])
-      .attr('width', w)
-      .attr('height', h)
-      .append('svg:g')
-      .attr('transform', 'translate(' + r + ',' + r + ')');
-    var pie = d3.layout.pie().value(function (d) {
-      return d.value;
+      let chart = am4core.create("chartdiv", am4charts.PieChart);
+      chart.data = this.item;
+      var pieSeries = chart.series.push(new am4charts.PieSeries());
+      pieSeries.dataFields.value = "cost";
+      pieSeries.dataFields.category = "title";
     });
-
-    // declare an arc generator function
-    var arc = d3.svg.arc().outerRadius(r);
-
-    // select paths, use arc generator to draw
-    var arcs = vis
-      .selectAll('g.slice')
-      .data(pie)
-      .enter()
-      .append('svg:g')
-      .attr('class', 'slice');
-    arcs
-      .append('svg:path')
-      .attr('fill', function (d, i) {
-        return color(i);
-      })
-      .attr('d', function (d) {
-        // log the result of the arc generator to show how cool it is :)
-        return arc(d);
-      });
-
-    // add the text
-    arcs
-      .append('svg:text')
-      .attr('transform', function (d) {
-        d.innerRadius = 0;
-        d.outerRadius = r;
-        return 'translate(' + arc.centroid(d) + ')';
-      })
-      .attr('text-anchor', 'middle')
-      .text(function (d, i) {
-        return data[i].label;
-      });
+  }
+  ngOnDestroy() {
+    // Clean up chart when the component is removed
+    this.browserOnly(() => {
+      if (this.chart) {
+        this.chart.dispose();
+      }
+    });
   }
 
 }
