@@ -9,8 +9,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class DashboardComponent implements OnInit {
   pieChartData = [];
-  barChartData = [];
+  expenseData = [];
+  stackData = [];
+  estimateExpenseObj = {};
   displayPieChart = false;
+  displayStackChart = false;
   constructor(
     private commonService: CommonService,
     private toastr: ToastrService,
@@ -25,14 +28,45 @@ export class DashboardComponent implements OnInit {
       subscribe((data: any) => {
           if(data.length  > 0){
             for(let i = 0;i<data.length;i++){
+              let obj = {
+                title: data[i].title,
+                estimatedCost: data[i].cost,
+                actualCost: 0
+              }
+              this.estimateExpenseObj[data[i].title] = data[i].cost;
               this.pieChartData.push(data[i]);
             }
             this.displayPieChart = true;
+            this.getExpenseData();
           }
       },
       (err) =>{
         this.toastr.error('Unable to fetch category', 'Error',{timeOut: 3000});
       });
+  }
+
+  getExpenseData(){
+    this.commonService.getCurrentMonthExpenses().subscribe(
+      (data: any) => {
+        if (data.length > 0) {
+          for (let i = 0; i < data.length; i++) {
+            this.expenseData.push(data[i]);
+            let obj = {
+              title: data[i].title,
+              estimatedCost: this.estimateExpenseObj[data[i].title],
+              actualCost: data[i].cost
+            }
+            this.stackData.push(obj);
+          }
+          this.displayStackChart = true;
+        }
+      },
+      (err) => {
+        this.toastr.error('Unable to fetch expenses', 'Error', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 
 }

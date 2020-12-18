@@ -61,13 +61,15 @@ export class BarChartComponent implements OnInit {
       let series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueY = 'cost';
       series.dataFields.categoryX = 'title';
-      series.name = 'Cost';
+      series.name = 'Actual Cost';
       series.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]';
       series.columns.template.fillOpacity = 0.8;
 
       let columnTemplate = series.columns.template;
       columnTemplate.strokeWidth = 2;
       columnTemplate.strokeOpacity = 1;
+      //add legend
+      chart.legend = new am4charts.Legend();
     });
   }
   ngOnDestroy() {

@@ -36,6 +36,9 @@ export class PieChartComponent implements OnInit {
       var pieSeries = chart.series.push(new am4charts.PieSeries());
       pieSeries.dataFields.value = "cost";
       pieSeries.dataFields.category = "title";
+      pieSeries.name = "Estimated Cost";
+      //add legend
+      chart.legend = new am4charts.Legend();
     });
   }
   ngOnDestroy() {

@@ -18,6 +18,8 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 import { ConfigureComponent } from './components/configure/configure.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
+import { StackedChartComponent } from './components/stacked-chart/stacked-chart.component';
+import { BarLineChartComponent } from './components/bar-line-chart/bar-line-chart.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
     PieChartComponent,
     BarChartComponent,
     ConfigureComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    StackedChartComponent,
+    BarLineChartComponent
   ],
   imports: [
     BrowserModule,

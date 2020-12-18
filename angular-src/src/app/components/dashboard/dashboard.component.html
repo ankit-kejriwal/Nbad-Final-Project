@@ -3,6 +3,14 @@
     <app-pie-chart *ngIf="displayPieChart" [item]="pieChartData"></app-pie-chart>
   </div>
   <div class="item1">
-    <app-bar-chart *ngIf="displayPieChart" [item]="pieChartData"></app-bar-chart>
+    <app-bar-chart *ngIf="displayStackChart" [item]="expenseData"></app-bar-chart>
+  </div>
+</div>
+<div class="box">
+  <div class="item1">
+    <app-stacked-chart *ngIf="displayStackChart" [item]="stackData"></app-stacked-chart>
+  </div>
+  <div class="item1">
+    <app-bar-line-chart *ngIf="displayStackChart" [item]="stackData"></app-bar-line-chart>
   </div>
 </div>
