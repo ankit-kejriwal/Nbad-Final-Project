@@ -6,6 +6,13 @@ export class AppPage {
   }
 
   getTitleText(): Promise<string> {
-    return element(by.css('app-root .content span')).getText() as Promise<string>;
+    return element(by.css('app-home h1')).getText() as Promise<string>;
+  }
+  getLoginButton(){
+    return element(by.css('[ng-reflect-router-link="/login"]'));
+  }
+
+  getRegisterButton(){
+    return element(by.css('[ng-reflect-router-link="/register"]'));
   }
 }

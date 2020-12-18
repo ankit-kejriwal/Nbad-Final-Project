@@ -1,5 +1,6 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
+import {  by, element } from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -10,7 +11,17 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('angular-src app is running!');
+    expect(page.getTitleText()).toEqual('Personal Budget');
+  });
+
+  it('should display login button', () => {
+    page.navigateTo();
+    expect(page.getLoginButton().getText()).toEqual('LOGIN');
+  });
+
+  it('should display register button', () => {
+    page.navigateTo();
+    expect(page.getRegisterButton().getText()).toEqual('REGISTER');
   });
 
   afterEach(async () => {
