@@ -1,14 +1,35 @@
 <h2 class="page-header">Add Expenses</h2>
 <div class="box">
-  <div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-    <span class="caret"></span></button>
+  <div class="dropdown item1">
+    <button
+      class="btn btn-primary dropdown-toggle"
+      type="button"
+      data-toggle="dropdown"
+    >
+      {{ selectedCategory }} <span class="caret"></span>
+    </button>
     <ul class="dropdown-menu">
-      <li><a href="#">HTML</a></li>
-      <li><a href="#">CSS</a></li>
-      <li><a href="#">JavaScript</a></li>
+      <li *ngFor="let row of categories">
+        <a href="javascript:void(0)" (click)="setCategory(row['title'])">
+          {{ row["title"] | uppercase }}
+        </a>
+      </li>
     </ul>
   </div>
-  <input type="text" class="form-control" name="datepicker" id="datepicker" />
-  <input type="text" [(ngModel)]="cost" name="username" class="form-control">
+  <div class="item2">
+    <label>Date</label>
+    <input type="text" class="form-control" name="datepicker" id="datepicker" />
+  </div>
+  <div class="item3">
+    <label>Cost</label>
+    <input
+      type="number"
+      [(ngModel)]="cost"
+      name="username"
+      class="form-control"
+    />
+  </div>
+  <div class="item4">
+    <button type="button" class="btn btn-primary"(click)="addExpenses()">Submit</button>
+  </div>
 </div>

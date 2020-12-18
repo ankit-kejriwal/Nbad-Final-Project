@@ -1,5 +1,11 @@
 .box{
   display: flex;
   direction: ltr;
-
+  justify-content: space-around;
+}
+.item1 {
+  align-self: flex-end;
+}
+.item4 {
+  align-self: flex-end;
 }

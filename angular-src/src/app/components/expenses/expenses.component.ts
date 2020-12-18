@@ -10,16 +10,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ExpensesComponent implements OnInit {
   categories = [];
   dp: any;
+  selectedCategory = '';
   constructor(
     private commonService: CommonService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.getAllCategory();
-  }
-
-  getAllCategory() {
     this.dp = $('#datepicker').datepicker({
       format: 'mm-yyyy',
       startView: 'months',
@@ -28,14 +25,21 @@ export class ExpensesComponent implements OnInit {
     }).on('changeDate', function(selected){
       console.log(selected);
   });
+    this.getAllCategory();
+  }
+
+  getAllCategory() {
     this.commonService.getAllCategory().subscribe(
       (data: any) => {
         if (data.length > 0) {
           for (let i = 0; i < data.length; i++) {
             this.categories.push(data[i]);
           }
+          this.selectedCategory = data[0].title;
         }
-        console.log(this.categories);
+        else {
+          this.selectedCategory = 'Category not present';
+        }
       },
       (err) => {
         this.toastr.error('Unable to fetch category', 'Error', {
@@ -43,5 +47,9 @@ export class ExpensesComponent implements OnInit {
         });
       }
     );
+  }
+
+  setCategory(data: any){
+    this.selectedCategory = data;
   }
 }
