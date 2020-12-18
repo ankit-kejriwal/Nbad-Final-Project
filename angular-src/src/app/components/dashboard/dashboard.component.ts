@@ -36,9 +36,9 @@ export class DashboardComponent implements OnInit {
               this.estimateExpenseObj[data[i].title] = data[i].cost;
               this.pieChartData.push(data[i]);
             }
-            this.displayPieChart = true;
-            this.getExpenseData();
           }
+          this.getExpenseData();
+          this.displayPieChart = true;
       },
       (err) =>{
         this.toastr.error('Unable to fetch category', 'Error',{timeOut: 3000});
@@ -58,8 +58,8 @@ export class DashboardComponent implements OnInit {
             }
             this.stackData.push(obj);
           }
-          this.displayStackChart = true;
         }
+        this.displayStackChart = true;
       },
       (err) => {
         this.toastr.error('Unable to fetch expenses', 'Error', {

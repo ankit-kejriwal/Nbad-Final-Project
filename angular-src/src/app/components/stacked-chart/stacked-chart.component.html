@@ -1,1 +1,4 @@
-<div id="stackedchartdiv" style="width: 90%; height: 400px"></div>
+<div id="stackedchartdiv" *ngIf="!noData" style="width: 90%; height: 400px"></div>
+<div class="box" style="width: 90%; height: 400px" *ngIf="noData">
+  <div>No Data</div>
+</div>

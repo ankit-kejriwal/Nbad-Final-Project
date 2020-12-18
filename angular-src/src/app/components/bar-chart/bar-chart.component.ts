@@ -18,10 +18,19 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 })
 export class BarChartComponent implements OnInit {
   @Input() item: any;
+  noData = false;
   private chart: am4charts.XYChart;
-  constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone) {}
+  constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone) {
+    this.noData = false;
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.item.length > 0){
+      this.noData = false;
+    } else {
+      this.noData = true;
+    }
+  }
   // Run the function only in the browser
   browserOnly(f: () => void) {
     if (isPlatformBrowser(this.platformId)) {
@@ -34,42 +43,43 @@ export class BarChartComponent implements OnInit {
   ngAfterViewInit() {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
+      if(this.item.length > 0){
+        let chart = am4core.create('barchartdiv', am4charts.XYChart);
+        chart.data = this.item;
 
-      let chart = am4core.create('barchartdiv', am4charts.XYChart);
-      chart.data = this.item;
+        // Create axes
 
-      // Create axes
+        let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = 'title';
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.minGridDistance = 30;
 
-      let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      categoryAxis.dataFields.category = 'title';
-      categoryAxis.renderer.grid.template.location = 0;
-      categoryAxis.renderer.minGridDistance = 30;
+        categoryAxis.renderer.labels.template.adapter.add('dy', function (
+          dy,
+          target
+        ) {
+          if (target.dataItem && target.dataItem.index ) {
+            return dy + 25;
+          }
+          return dy;
+        });
 
-      categoryAxis.renderer.labels.template.adapter.add('dy', function (
-        dy,
-        target
-      ) {
-        if (target.dataItem && target.dataItem.index ) {
-          return dy + 25;
-        }
-        return dy;
-      });
+        let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        // Create series
+        let series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = 'cost';
+        series.dataFields.categoryX = 'title';
+        series.name = 'Actual Cost';
+        series.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]';
+        series.columns.template.fillOpacity = 0.8;
 
-      // Create series
-      let series = chart.series.push(new am4charts.ColumnSeries());
-      series.dataFields.valueY = 'cost';
-      series.dataFields.categoryX = 'title';
-      series.name = 'Actual Cost';
-      series.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]';
-      series.columns.template.fillOpacity = 0.8;
-
-      let columnTemplate = series.columns.template;
-      columnTemplate.strokeWidth = 2;
-      columnTemplate.strokeOpacity = 1;
-      //add legend
-      chart.legend = new am4charts.Legend();
+        let columnTemplate = series.columns.template;
+        columnTemplate.strokeWidth = 2;
+        columnTemplate.strokeOpacity = 1;
+        //add legend
+        chart.legend = new am4charts.Legend();
+      }
     });
   }
   ngOnDestroy() {

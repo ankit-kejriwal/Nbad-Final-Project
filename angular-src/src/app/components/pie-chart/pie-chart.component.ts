@@ -11,12 +11,19 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 export class PieChartComponent implements OnInit {
   @Input() item: any;
   private chart: am4charts.PieChart;
+  noData = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId, private zone: NgZone
-  ) { }
+  ) {
+    this.noData = false;
+  }
 
   ngOnInit(): void {
-
+    if(this.item.length > 0){
+      this.noData = false;
+    } else {
+      this.noData = true;
+    }
   }
   // Run the function only in the browser
   browserOnly(f: () => void) {
@@ -30,15 +37,17 @@ export class PieChartComponent implements OnInit {
   ngAfterViewInit(){
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
+      if(this.item.length > 0){
+        let chart = am4core.create("chartdiv", am4charts.PieChart);
+        chart.data = this.item;
+        var pieSeries = chart.series.push(new am4charts.PieSeries());
+        pieSeries.dataFields.value = "cost";
+        pieSeries.dataFields.category = "title";
+        pieSeries.name = "Estimated Cost";
+        //add legend
+        chart.legend = new am4charts.Legend();
+      }
 
-      let chart = am4core.create("chartdiv", am4charts.PieChart);
-      chart.data = this.item;
-      var pieSeries = chart.series.push(new am4charts.PieSeries());
-      pieSeries.dataFields.value = "cost";
-      pieSeries.dataFields.category = "title";
-      pieSeries.name = "Estimated Cost";
-      //add legend
-      chart.legend = new am4charts.Legend();
     });
   }
   ngOnDestroy() {

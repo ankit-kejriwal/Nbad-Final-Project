@@ -18,10 +18,19 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 })
 export class BarLineChartComponent implements OnInit {
   @Input() item: any;
+  noData = false;
   private chart: am4charts.XYChart;
-  constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone) {}
+  constructor(@Inject(PLATFORM_ID) private platformId, private zone: NgZone) {
+    this.item = false
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.item.length > 0){
+      this.noData = false;
+    } else {
+      this.noData = true;
+    }
+  }
 
   // Run the function only in the browser
   browserOnly(f: () => void) {
@@ -35,8 +44,8 @@ export class BarLineChartComponent implements OnInit {
   ngAfterViewInit() {
     this.browserOnly(() => {
       am4core.useTheme(am4themes_animated);
-
-      let chart = am4core.create('barLineDiv', am4charts.XYChart);
+      if(this.item.length > 0){
+        let chart = am4core.create('barLineDiv', am4charts.XYChart);
       console.log(this.item);
       chart.data = this.item;
 
@@ -77,6 +86,8 @@ export class BarLineChartComponent implements OnInit {
 
       //add legend
       chart.legend = new am4charts.Legend();
+      }
+
     });
   }
   ngOnDestroy() {
