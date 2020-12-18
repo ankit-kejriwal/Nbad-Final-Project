@@ -1,4 +1,4 @@
 module.exports = {
-    database: 'mongodb://localhost:27017/budget',
+    database: 'mongodb+srv://ankit:ankit@cluster0.fnpvj.mongodb.net/budget?retryWrites=true&w=majority',
     secret: 'finalsecretkey'
 }

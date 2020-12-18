@@ -48,7 +48,7 @@
 
     exports.push([module.i, "/* You can add global styles to this file, and also import other style files */", "", {
       "version": 3,
-      "sources": ["/Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/src/styles.scss"],
+      "sources": ["/Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/src/styles.scss"],
       "names": [],
       "mappings": "AAAA,8EAAA",
       "file": "styles.scss",
@@ -527,11 +527,11 @@
   /***/
   function _(module, exports, __webpack_require__) {
     __webpack_require__(
-    /*! /Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/node_modules/ngx-toastr/toastr.css */
+    /*! /Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/node_modules/ngx-toastr/toastr.css */
     "./node_modules/ngx-toastr/toastr.css");
 
     module.exports = __webpack_require__(
-    /*! /Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/src/styles.scss */
+    /*! /Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/src/styles.scss */
     "./src/styles.scss");
     /***/
   }

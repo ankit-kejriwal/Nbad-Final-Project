@@ -29,7 +29,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */", "",{"version":3,"sources":["/Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/src/styles.scss"],"names":[],"mappings":"AAAA,8EAAA","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\n"]}]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */", "",{"version":3,"sources":["/Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/src/styles.scss"],"names":[],"mappings":"AAAA,8EAAA","file":"styles.scss","sourcesContent":["/* You can add global styles to this file, and also import other style files */\n"]}]);
 // Exports
 module.exports = exports;
 
@@ -490,8 +490,8 @@ module.exports = exported;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/node_modules/ngx-toastr/toastr.css */"./node_modules/ngx-toastr/toastr.css");
-module.exports = __webpack_require__(/*! /Users/ankitkejriwal/Desktop/NBAD/finalProject/Nbad-Final-Project/angular-src/src/styles.scss */"./src/styles.scss");
+__webpack_require__(/*! /Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/node_modules/ngx-toastr/toastr.css */"./node_modules/ngx-toastr/toastr.css");
+module.exports = __webpack_require__(/*! /Users/ankitkejriwal/Desktop/NBADFINAL/Nbad-Final-Project/angular-src/src/styles.scss */"./src/styles.scss");
 
 
 /***/ })
