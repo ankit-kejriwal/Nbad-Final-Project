@@ -4,5 +4,17 @@
 }
 .item1{
   flex-grow: 1;
-
+}
+.top-box{
+  display: flex;
+  direction: rtl;
+}
+.topCalendar{
+  width: 18%;
+}
+.calendar-label{
+  padding-top: 9px;
+  padding-right: 2%;
+  font-size: 19px;
+  background-color: #fff;
 }

@@ -44,6 +44,8 @@ export class PieChartComponent implements OnInit {
         pieSeries.dataFields.value = "cost";
         pieSeries.dataFields.category = "title";
         pieSeries.name = "Estimated Cost";
+        pieSeries.labels.template.disabled = true;
+        pieSeries.ticks.template.disabled = true;
         //add legend
         chart.legend = new am4charts.Legend();
       }
