@@ -144,6 +144,7 @@ export class ExpensesComponent implements OnInit {
           this.toastr.success('Successfully added expense', 'Success', {
             timeOut: 3000,
           });
+          this.cost = 0;
           this.displayMonth = this.monthNames[obj.month];
           this.getExpenses(obj);
         },

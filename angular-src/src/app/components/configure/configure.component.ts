@@ -30,6 +30,8 @@ export class ConfigureComponent implements OnInit {
       subscribe((data: any) => {
           this.toastr.success('Successfully added category', 'Success',{timeOut: 3000});
           this.getAllCategory();
+          this.category = '';
+          this.cost = '';
       },
       (err) =>{
         this.toastr.error('Error', 'Error',{timeOut: 3000});
