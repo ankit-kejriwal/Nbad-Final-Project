@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +35,8 @@ export class DashboardComponent implements OnInit {
   displayStackChart = false;
   constructor(
     private commonService: CommonService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -94,9 +96,12 @@ export class DashboardComponent implements OnInit {
         this.displayPieChart = true;
       },
       (err) => {
-        this.toastr.error('Unable to fetch category', 'Error', {
-          timeOut: 3000,
-        });
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       }
     );
   }
@@ -120,9 +125,12 @@ export class DashboardComponent implements OnInit {
         this.displayStackChart = true;
       },
       (err) => {
-        this.toastr.error('Unable to fetch expenses', 'Error', {
-          timeOut: 3000,
-        });
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       }
     );
   }

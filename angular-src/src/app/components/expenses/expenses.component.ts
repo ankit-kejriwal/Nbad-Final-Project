@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from 'src/app/services/common.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-expenses',
@@ -33,7 +34,8 @@ export class ExpensesComponent implements OnInit {
   cost: any;
   constructor(
     private commonService: CommonService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -92,9 +94,12 @@ export class ExpensesComponent implements OnInit {
         }
       },
       (err) => {
-        this.toastr.error('Unable to fetch category', 'Error', {
-          timeOut: 3000,
-        });
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       }
     );
   }
@@ -110,9 +115,12 @@ export class ExpensesComponent implements OnInit {
         }
       },
       (err) => {
-        this.toastr.error('Unable to fetch expenses', 'Error', {
-          timeOut: 3000,
-        });
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       }
     );
   }
@@ -149,7 +157,13 @@ export class ExpensesComponent implements OnInit {
           this.getExpenses(obj);
         },
         (err) => {
-          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+          if(err.status == 401) {
+            this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+            this.router.navigate(['login']);
+          } else {
+            this.toastr.error('Error', 'Error', { timeOut: 3000 });
+          }
+
         }
       );
     }

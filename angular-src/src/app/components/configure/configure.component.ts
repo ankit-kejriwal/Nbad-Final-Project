@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from 'src/app/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configure',
@@ -14,6 +15,7 @@ export class ConfigureComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private toastr: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,12 @@ export class ConfigureComponent implements OnInit {
           this.cost = '';
       },
       (err) =>{
-        this.toastr.error('Error', 'Error',{timeOut: 3000});
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       });
     } else {
       this.toastr.error('Required fields are not correct. Please check the input', 'Error',{timeOut: 3000});
@@ -53,7 +60,12 @@ export class ConfigureComponent implements OnInit {
           }
       },
       (err) =>{
-        this.toastr.error('Unable to fetch category', 'Error',{timeOut: 3000});
+        if(err.status == 401) {
+          this.toastr.error('Session has expired', 'Error', { timeOut: 3000 });
+          this.router.navigate(['login']);
+        } else {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       });
   }
 
