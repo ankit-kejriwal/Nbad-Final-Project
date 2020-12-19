@@ -26,9 +26,10 @@ export class ExpensesComponent implements OnInit {
   }
 
   initiazlizeCalendar(){
-    this.dp = $('#datepicker').datepicker({
+    this.dp = $('#datepicker1').datepicker({
       format: 'mm-yyyy',
       startView: 'months',
+      endDate: new Date(),
       minViewMode: 'months',
       autoclose: true,
     }).on('changeDate', (selected) => {
@@ -80,24 +81,26 @@ export class ExpensesComponent implements OnInit {
   }
 
   addExpenses(){
-    console.log(this.selectedDate.date.getMonth())
-    console.log(this.selectedDate.date.getFullYear())
-    console.log(this.selectedCategory);
-    console.log(this.cost);
-    const expense = {
-      title: this.selectedCategory,
-      cost: this.cost,
-      month:this.selectedDate.date.getMonth() + 1,
-      year:this.selectedDate.date.getFullYear(),
-    };
-    this.commonService.addExpenses(expense).subscribe(
-      (data: any) => {
-        this.toastr.success('Successfully added expense', 'Success',{timeOut: 3000});
-        this.getExpenses();
-    },
-    (err) =>{
-      this.toastr.error('Error', 'Error',{timeOut: 3000});
+    if(this.cost < 0){
+      this.toastr.error('Cost should be greater than zero', 'Error',{timeOut: 3000});
+    } else if(this.selectedDate == null){
+      this.toastr.error('Please select date', 'Error',{timeOut: 3000});
+    } else {
+      const expense = {
+        title: this.selectedCategory,
+        cost: this.cost,
+        month:this.selectedDate.date.getMonth() + 1,
+        year:this.selectedDate.date.getFullYear(),
+      };
+      this.commonService.addExpenses(expense).subscribe(
+        (data: any) => {
+          this.toastr.success('Successfully added expense', 'Success',{timeOut: 3000});
+          this.getExpenses();
+      },
+      (err) =>{
+        this.toastr.error('Error', 'Error',{timeOut: 3000});
+      }
+      );
     }
-    );
   }
 }

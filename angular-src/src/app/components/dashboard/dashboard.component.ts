@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit {
       .datepicker({
         format: 'mm-yyyy',
         startView: 'months',
+        endDate: new Date(),
         minViewMode: 'months',
         autoclose: true,
       })
