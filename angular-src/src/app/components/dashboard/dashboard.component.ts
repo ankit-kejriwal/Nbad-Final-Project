@@ -12,7 +12,23 @@ export class DashboardComponent implements OnInit {
   expenseData = [];
   stackData = [];
   dp: any;
-  selectedDate : any;
+  displayMonth = '';
+  monthNames = [
+    '',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  selectedDate: any;
   estimateExpenseObj = {};
   displayPieChart = false;
   displayStackChart = false;
@@ -38,12 +54,19 @@ export class DashboardComponent implements OnInit {
         this.displayStackChart = false;
         this.selectedDate = selected;
         let obj = {
-          month:this.selectedDate.date.getMonth() + 1,
-          year:this.selectedDate.date.getFullYear(),
-        }
+          month: this.selectedDate.date.getMonth() + 1,
+          year: this.selectedDate.date.getFullYear(),
+        };
+        this.displayMonth = this.monthNames[obj.month];
         this.getExpenseData(obj);
       });
-      $("#datepicker").datepicker("setDate", new Date());
+    let date = new Date();
+    let obj = {
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+    };
+    this.displayMonth = this.monthNames[obj.month];
+    $('#datepicker').datepicker('setDate', date);
   }
 
   getPieChartData() {
@@ -64,9 +87,9 @@ export class DashboardComponent implements OnInit {
         let date = new Date();
 
         let obj = {
-          month : date.getMonth()+1,
-          year: date.getFullYear()
-        }
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+        };
         this.getExpenseData(obj);
         this.displayPieChart = true;
       },

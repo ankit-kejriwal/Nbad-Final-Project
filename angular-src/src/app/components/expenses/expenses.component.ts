@@ -11,9 +11,26 @@ export class ExpensesComponent implements OnInit {
   categories = [];
   expenses = [];
   dp: any;
+  dp2: any;
   selectedCategory = '';
-  selectedDate : any;
-  cost: any ;
+  selectedDate: any;
+  displayMonth = '';
+  monthNames = [
+    '',
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  cost: any;
   constructor(
     private commonService: CommonService,
     private toastr: ToastrService
@@ -21,20 +38,45 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit(): void {
     this.initiazlizeCalendar();
-    this.getExpenses();
+    let date = new Date();
+    let obj = {
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+    };
+    this.displayMonth = this.monthNames[obj.month];
+    this.getExpenses(obj);
     this.getAllCategory();
   }
 
-  initiazlizeCalendar(){
-    this.dp = $('#datepicker1').datepicker({
-      format: 'mm-yyyy',
-      startView: 'months',
-      endDate: new Date(),
-      minViewMode: 'months',
-      autoclose: true,
-    }).on('changeDate', (selected) => {
-      this.selectedDate = selected;
-  });
+  initiazlizeCalendar() {
+    this.dp = $('#datepicker1')
+      .datepicker({
+        format: 'mm-yyyy',
+        startView: 'months',
+        endDate: new Date(),
+        minViewMode: 'months',
+        autoclose: true,
+      })
+      .on('changeDate', (selected) => {
+        this.selectedDate = selected;
+      });
+
+    this.dp2 = $('#datepicker2')
+      .datepicker({
+        format: 'mm-yyyy',
+        startView: 'months',
+        endDate: new Date(),
+        minViewMode: 'months',
+        autoclose: true,
+      })
+      .on('changeDate', (selected) => {
+        let obj = {
+          month: selected.date.getMonth() + 1,
+          year: selected.date.getFullYear(),
+        };
+        this.displayMonth = this.monthNames[obj.month];
+        this.getExpenses(obj);
+      });
   }
 
   getAllCategory() {
@@ -45,8 +87,7 @@ export class ExpensesComponent implements OnInit {
             this.categories.push(data[i]);
           }
           this.selectedCategory = data[0].title;
-        }
-        else {
+        } else {
           this.selectedCategory = 'Category not present';
         }
       },
@@ -58,9 +99,9 @@ export class ExpensesComponent implements OnInit {
     );
   }
 
-  getExpenses() {
+  getExpenses(obj) {
     this.expenses = [];
-    this.commonService.getCurrentMonthExpenses().subscribe(
+    this.commonService.getMonthExpenses(obj).subscribe(
       (data: any) => {
         if (data.length > 0) {
           for (let i = 0; i < data.length; i++) {
@@ -76,30 +117,39 @@ export class ExpensesComponent implements OnInit {
     );
   }
 
-  setCategory(data: any){
+  setCategory(data: any) {
     this.selectedCategory = data;
   }
 
-  addExpenses(){
-    if(this.cost < 0){
-      this.toastr.error('Cost should be greater than zero', 'Error',{timeOut: 3000});
-    } else if(this.selectedDate == null){
-      this.toastr.error('Please select date', 'Error',{timeOut: 3000});
+  addExpenses() {
+    if (this.cost < 0) {
+      this.toastr.error('Cost should be greater than zero', 'Error', {
+        timeOut: 3000,
+      });
+    } else if (this.selectedDate == null) {
+      this.toastr.error('Please select date', 'Error', { timeOut: 3000 });
     } else {
       const expense = {
         title: this.selectedCategory,
         cost: this.cost,
-        month:this.selectedDate.date.getMonth() + 1,
-        year:this.selectedDate.date.getFullYear(),
+        month: this.selectedDate.date.getMonth() + 1,
+        year: this.selectedDate.date.getFullYear(),
+      };
+      let obj = {
+        month: this.selectedDate.date.getMonth() + 1,
+        year: this.selectedDate.date.getFullYear(),
       };
       this.commonService.addExpenses(expense).subscribe(
         (data: any) => {
-          this.toastr.success('Successfully added expense', 'Success',{timeOut: 3000});
-          this.getExpenses();
-      },
-      (err) =>{
-        this.toastr.error('Error', 'Error',{timeOut: 3000});
-      }
+          this.toastr.success('Successfully added expense', 'Success', {
+            timeOut: 3000,
+          });
+          this.displayMonth = this.monthNames[obj.month];
+          this.getExpenses(obj);
+        },
+        (err) => {
+          this.toastr.error('Error', 'Error', { timeOut: 3000 });
+        }
       );
     }
   }

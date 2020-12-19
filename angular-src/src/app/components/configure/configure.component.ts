@@ -25,7 +25,7 @@ export class ConfigureComponent implements OnInit {
       title: this.category,
       cost: this.cost
     };
-    if(this.category.length > 0 && this.cost != 0){
+    if(this.category.length > 0 && this.cost > 0){
       this.commonService.addCategory(category).
       subscribe((data: any) => {
           this.toastr.success('Successfully added category', 'Success',{timeOut: 3000});
@@ -35,7 +35,7 @@ export class ConfigureComponent implements OnInit {
         this.toastr.error('Error', 'Error',{timeOut: 3000});
       });
     } else {
-      this.toastr.error('Please enter all the required fields', 'Error',{timeOut: 3000});
+      this.toastr.error('Required fields are not correct. Please check the input', 'Error',{timeOut: 3000});
     }
 
   }
